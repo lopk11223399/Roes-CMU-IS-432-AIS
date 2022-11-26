@@ -723,7 +723,7 @@ body {
   position: relative;
 }
 .form__select--active::after {
-  content: url(../image/icon/check.svg);
+  content: url(../images/icon/check.svg);
   position: absolute;
   top: 7px;
   right: 7px;

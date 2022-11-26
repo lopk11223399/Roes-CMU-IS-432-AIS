@@ -1,8 +1,8 @@
 const client = contentful.createClient({
-    // This is the space ID. A space is like a project folder in Contentful terms
-    space: "zbeeszdq743p",
-    // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
-    accessToken: "q8cv7tD0-nNAlH2lz45ivu8U18K9yClKhTtCWBUhLM0"
+	// This is the space ID. A space is like a project folder in Contentful terms
+	space: 'zbeeszdq743p',
+	// This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+	accessToken: 'q8cv7tD0-nNAlH2lz45ivu8U18K9yClKhTtCWBUhLM0',
 })
 
 // variables
@@ -31,28 +31,28 @@ const randomBill = document.querySelector('.title__random')
 
 // Date
 const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
 ]
 
 const weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday',
 ]
 
 // cart
@@ -60,37 +60,62 @@ let cart = []
 
 // getting the products
 class Products {
-    async getProducts() {
-        try {
-            let contentful = await client.getEntries({
-                content_type: "products"
-            })
+	async getProducts() {
+		try {
+			let contentful = await client.getEntries({
+				content_type: 'products',
+			})
 
-            // let result = await fetch('product.json')
-            // let data = await result.json()
-            // let products = data.items
+			// let result = await fetch('product.json')
+			// let data = await result.json()
+			// let products = data.items
 
-            let products = contentful.items
-            products = products.map(item => {
-                const { title, price, category } = item.fields
-                const { id } = item.sys
-                const image = item.fields.image.fields.file.url
-                return { title, price, category, id, image }
-            })
-            return products
-        } catch (error) {
-            console.log(error)
-        }
-    }
+			let products = contentful.items
+			products = products.map(item => {
+				const { title, price, category } = item.fields
+				const { id } = item.sys
+				const image = item.fields.image.fields.file.url
+				return { title, price, category, id, image }
+			})
+			return products
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	async getUser() {
+		try {
+			let contentful = await client.getEntries({
+				content_type: 'user',
+			})
+
+			let users = contentful.items
+			users = users.map(item => {
+				const { fullname } = item.fields
+				return { fullname }
+			})
+			return users
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	async checkUser() {
+		const params = new URLSearchParams(window.location.search)
+
+		params.forEach(value => {
+			user = value
+		})
+	}
 }
 
 class UI {
-    // display products
-    displayProducts(products) {
-        let result = ''
-        products.forEach(product => {
-            let { title, price, id, image } = product
-            result += `
+	// display products
+	displayProducts(products) {
+		let result = ''
+		products.forEach(product => {
+			let { title, price, id, image } = product
+			result += `
             <!-- product -->
             <div class="product__item">
                 <img class="product__item--img" src=${image} alt=${title}>
@@ -100,192 +125,213 @@ class UI {
             </div>
             <!-- end of product -->
             `
-        })
-        productsDOM.innerHTML = result
-    }
+		})
+		productsDOM.innerHTML = result
+	}
 
-    // display category
-    displayCategory(products, curentIndex = 0) {
-        const categorys = products.reduce((values, item) => {
-            if (!values.includes(item.category)) {
-                values.push(item.category)
-            }
-            return values
-        }, ["All"])
+	// display category
+	displayCategory(products, curentIndex = 0) {
+		const categorys = products.reduce(
+			(values, item) => {
+				if (!values.includes(item.category)) {
+					values.push(item.category)
+				}
+				return values
+			},
+			['All'],
+		)
 
-        let result = ''
-        categorys.forEach((category, index) => {
-            result += `
-            <p class="category__list--item ${index === curentIndex ? 'category__active' : ''}">${category}</p>
+		let result = ''
+		categorys.forEach((category, index) => {
+			result += `
+            <p class="category__list--item ${
+							index === curentIndex ? 'category__active' : ''
+						}">${category}</p>
             `
-        })
-        categorysDOM.innerHTML = result
-    }
+		})
+		categorysDOM.innerHTML = result
+	}
 
-    // render Time today
-    displayTime() {
-        // render time after 1s
-        setInterval(this.getTime, 1000)
-    }
+	// render Time today
+	displayTime() {
+		// render time after 1s
+		setInterval(this.getTime, 1000)
+	}
 
-    // Get Time
-    getTime() {
-        let today = new Date()
-        let year = today.getFullYear()
-        let month = today.getMonth()
-        month = months[month]
-        let date = today.getDate()
-        let weekday = weekdays[today.getDay()]
-        let hours = today.getHours()
-        let minutes = today.getMinutes()
-        let seconds = today.getSeconds()
+	// Get Time
+	getTime() {
+		let today = new Date()
+		let year = today.getFullYear()
+		let month = today.getMonth()
+		month = months[month]
+		let date = today.getDate()
+		let weekday = weekdays[today.getDay()]
+		let hours = today.getHours()
+		let minutes = today.getMinutes()
+		let seconds = today.getSeconds()
+		let day = 'AM'
 
-        timeToday.textContent = `${weekday}, ${date} ${month} ${year} - ${hours}:${minutes}:${seconds}`
+		if (hours > 12) {
+			day = 'PM'
+		}
 
-        // get date add to bill
-        return {
-            weekday: weekday,
-            date: date,
-            month: month,
-            year: year,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
-        }
-    }
+		if (seconds < 10) {
+			seconds = '0' + seconds
+		}
 
-    // Get product when click to category
-    getProductFormCategory() {
-        const categoryBtn = document.querySelectorAll('.category__list--item')
-        categoryBtn.forEach(btn =>
-            btn.addEventListener('click', e => {
-                let products = [...Storage.getProducts()]
-                const category = e.target.innerText
-                const categoryCheck = products.filter(function (value) {
-                    if (value.category === category) {
-                        return value
-                    }
-                })
+		if (minutes < 10) {
+			minutes = '0' + minutes
+		}
 
-                if (category === "All") {
-                    this.displayProducts(products)
-                    this.getBtnOrder()
-                } else {
-                    this.displayProducts(categoryCheck)
-                    this.getBtnOrder()
-                }
-            })
-        )
-    }
+		if (hours < 10) {
+			hours = '0' + hours
+		}
 
-    // handle divider when click to category
-    handleDivider() {
-        const categoryBtn = document.querySelectorAll('.category__list--item')
-        const categorActive = document.querySelector('.category__list--item.category__active')
-        divider.style.left = categorActive.offsetLeft + 'px'
+		timeToday.textContent = `${weekday}, ${date} ${month} ${year} - ${hours}:${minutes}:${seconds} ${day}`
 
-        categoryBtn.forEach(btn =>
-            btn.addEventListener('click', () => {
-                document.querySelector('.category__list--item.category__active').classList.remove('category__active')
-                divider.style.left = btn.offsetLeft + 'px'
-                btn.classList.add('category__active')
-            })
-        )
+		// get date add to bill
+		return {
+			day: `${date}/${month}/${year}`,
+			time: `${hours}:${minutes}:${seconds}`,
+		}
+	}
 
-        // call get product when click to category
-        this.getProductFormCategory()
-    }
+	// Get product when click to category
+	getProductFormCategory() {
+		const categoryBtn = document.querySelectorAll('.category__list--item')
+		categoryBtn.forEach(btn =>
+			btn.addEventListener('click', e => {
+				let products = [...Storage.getProducts()]
+				const category = e.target.innerText
+				const categoryCheck = products.filter(function (value) {
+					if (value.category === category) {
+						return value
+					}
+				})
 
-    // search product
-    inputSearchProduct() {
-        inputSearch.addEventListener('keyup', () => {
-            const value = inputSearch.value
-            // console.log(value)
-            let products = [...Storage.getProducts()]
-            let filteredProducts = products.filter(product => {
-                return product.title.toLowerCase().includes(value)
-            })
+				if (category === 'All') {
+					this.displayProducts(products)
+					this.getBtnOrder()
+				} else {
+					this.displayProducts(categoryCheck)
+					this.getBtnOrder()
+				}
+			}),
+		)
+	}
 
-            if (filteredProducts.length < 1) {
-                productsDOM.innerHTML = `<h2 class="product__note">Sorry, no products matched your search</h2>`
-                return
-            } else {
-                // call render item after search
-                this.displayProducts(filteredProducts)
-                // call handle click order
-                this.getBtnOrder()
-                // call render category after search
-                this.displayCategory(products)
-                // call handle divider
-                this.handleDivider()
-            }
-        })
-    }
+	// handle divider when click to category
+	handleDivider() {
+		const categoryBtn = document.querySelectorAll('.category__list--item')
+		const categorActive = document.querySelector(
+			'.category__list--item.category__active',
+		)
+		divider.style.left = categorActive.offsetLeft + 'px'
 
-    // handle click order add to cart
-    getBtnOrder() {
-        const orderBtns = [...document.querySelectorAll('.product__item--btn')]
-        cart = Storage.getCart()
-        // console.log(orderBtns.length)
-        orderBtns.forEach(orderBtn => {
-            orderBtn.addEventListener('click', (e) => {
-                let id = e.target.dataset.id
-                let check = cart.find((x) => x.id === id)
-                if (check === undefined) {
-                    cart.push({
-                        ...Storage.getProductId(id),
-                        amount: 1,
-                    })
-                } else {
-                    check.amount += 1
-                }
-                // save cart in local storage
-                Storage.saveCart(cart)
-                // set cart values
-                this.setTotal(cart)
-                // display cart item
-                this.addCartItem(cart)
-            })
-        })
-    }
+		categoryBtn.forEach(btn =>
+			btn.addEventListener('click', () => {
+				document
+					.querySelector('.category__list--item.category__active')
+					.classList.remove('category__active')
+				divider.style.left = btn.offsetLeft + 'px'
+				btn.classList.add('category__active')
+			}),
+		)
 
-    // render total 
-    setTotal(cart) {
-        let tempTotal = 0
+		// call get product when click to category
+		this.getProductFormCategory()
+	}
 
-        if (Array.isArray(cart)) {
-            cart.map(item => {
-                tempTotal += item.price * item.amount
-            })
-        }
+	// search product
+	inputSearchProduct() {
+		inputSearch.addEventListener('keyup', () => {
+			const value = inputSearch.value
+			// console.log(value)
+			let products = [...Storage.getProducts()]
+			let filteredProducts = products.filter(product => {
+				return product.title.toLowerCase().includes(value)
+			})
 
-        if (cart === undefined) {
-            subTotal.innerText = '$ 0'
-            totalPayment.innerText = '$ 0'
-        } else {
-            subTotal.innerText = `$ ${parseFloat(tempTotal.toFixed(2))}`
-            totalPayment.innerText = `$ ${parseFloat(tempTotal.toFixed(2))}`
-        }
-    }
+			if (filteredProducts.length < 1) {
+				productsDOM.innerHTML = `<h2 class="product__note">Sorry, no products matched your search</h2>`
+				return
+			} else {
+				// call render item after search
+				this.displayProducts(filteredProducts)
+				// call handle click order
+				this.getBtnOrder()
+				// call render category after search
+				this.displayCategory(products)
+				// call handle divider
+				this.handleDivider()
+			}
+		})
+	}
 
-    // logic after add item to cart
-    addCartItem(items) {
-        cartList.innerHTML = this.getCartItems(items)
-        this.removeItemCart()
-        this.inputCartItemNumber()
-        this.inputCartItemNote()
-        this.payment()
-        // set up total
-        this.setTotal(items)
-    }
+	// handle click order add to cart
+	getBtnOrder() {
+		const orderBtns = [...document.querySelectorAll('.product__item--btn')]
+		cart = Storage.getCart()
+		// console.log(orderBtns.length)
+		orderBtns.forEach(orderBtn => {
+			orderBtn.addEventListener('click', e => {
+				let id = e.target.dataset.id
+				let check = cart.find(x => x.id === id)
+				if (check === undefined) {
+					cart.push({
+						...Storage.getProductId(id),
+						amount: 1,
+					})
+				} else {
+					check.amount += 1
+				}
+				// save cart in local storage
+				Storage.saveCart(cart)
+				// set cart values
+				this.setTotal(cart)
+				// display cart item
+				this.addCartItem(cart)
+			})
+		})
+	}
 
-    // render item after click order 
-    getCartItems(items) {
-        let result = ''
-        if (Array.isArray(items)) {
-            items.forEach(item => {
-                let { title, price, id, image, amount, note } = item
-                result += `
+	// render total
+	setTotal(cart) {
+		let tempTotal = 0
+
+		if (Array.isArray(cart)) {
+			cart.map(item => {
+				tempTotal += item.price * item.amount
+			})
+		}
+
+		if (cart === undefined) {
+			subTotal.innerText = '$ 0'
+			totalPayment.innerText = '$ 0'
+		} else {
+			subTotal.innerText = `$ ${parseFloat(tempTotal.toFixed(2))}`
+			totalPayment.innerText = `$ ${parseFloat(tempTotal.toFixed(2))}`
+		}
+	}
+
+	// logic after add item to cart
+	addCartItem(items) {
+		cartList.innerHTML = this.getCartItems(items)
+		this.removeItemCart()
+		this.inputCartItemNumber()
+		this.inputCartItemNote()
+		this.payment()
+		// set up total
+		this.setTotal(items)
+	}
+
+	// render item after click order
+	getCartItems(items) {
+		let result = ''
+		if (Array.isArray(items)) {
+			items.forEach(item => {
+				let { title, price, id, image, amount, note } = item
+				result += `
                 <div class="cart__item" data-id=${id}>
                     <div class="cart__item--top">
                         <div class="cart__name">
@@ -298,10 +344,14 @@ class UI {
                             </div>
                             <input type="number" class="cart__input" value="${amount}">
                         </div>
-                        <p class="cart--total">$${(price * amount).toFixed(2)}</p>
+                        <p class="cart--total">$${(price * amount).toFixed(
+													2,
+												)}</p>
                     </div>
                     <div class="cart__item--bottom">
-                        <input class="cart__bottom--input" type="text" placeholder="Order Note..." value="${note === undefined ? '' : note}" data-id=${id}>
+                        <input class="cart__bottom--input" type="text" placeholder="Order Note..." value="${
+													note === undefined ? '' : note
+												}" data-id=${id}>
                         <div class="cart__bottom--trash" data-id=${id}>
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -311,280 +361,298 @@ class UI {
                     </div>
                 </div>
                 `
-            })
-        }
-        return result
-    }
+			})
+		}
+		return result
+	}
 
-    // handle click trash to remove item in cart
-    removeItemCart() {
-        const trashBtns = cartList.querySelectorAll('.cart__bottom--trash')
-        trashBtns.forEach(e => {
-            e.addEventListener('click', event => {
-                let item = event.target
-                let id = item.dataset.id
-                this.getItemRemove(id)
-                cartList.removeChild(item.parentElement.parentElement)
-            })
-        })
-    }
+	// handle click trash to remove item in cart
+	removeItemCart() {
+		const trashBtns = cartList.querySelectorAll('.cart__bottom--trash')
+		trashBtns.forEach(e => {
+			e.addEventListener('click', event => {
+				let item = event.target
+				let id = item.dataset.id
+				this.getItemRemove(id)
+				cartList.removeChild(item.parentElement.parentElement)
+			})
+		})
+	}
 
-    // get item to remove
-    getItemRemove(id) {
-        cart = cart.filter(item => item.id !== id)
-        Storage.saveCart(cart)
-        this.setTotal(cart)
-    }
+	// get item to remove
+	getItemRemove(id) {
+		cart = cart.filter(item => item.id !== id)
+		Storage.saveCart(cart)
+		this.setTotal(cart)
+	}
 
-    // handle change input number amount item
-    inputCartItemNumber() {
-        const inputValues = cartList.querySelectorAll('.cart__input')
-        inputValues.forEach(e => {
-            e.addEventListener('change', event => {
-                let target = event.target
-                let value = parseInt(target.value)
-                let item = target.parentElement.parentElement.parentElement
-                let itemId = item.dataset.id
-                this.getInputCartItemNumber(itemId, value)
-            })
-        })
-    }
+	// handle change input number amount item
+	inputCartItemNumber() {
+		const inputValues = cartList.querySelectorAll('.cart__input')
+		inputValues.forEach(e => {
+			e.addEventListener('change', event => {
+				let target = event.target
+				let value = parseInt(target.value)
+				let item = target.parentElement.parentElement.parentElement
+				let itemId = item.dataset.id
+				this.getInputCartItemNumber(itemId, value)
+			})
+		})
+	}
 
-    // get amount item to change 
-    getInputCartItemNumber(itemId, value) {
-        cart.forEach((vaule) => {
-            if (vaule.id === itemId) {
-                if (value <= 0 || isNaN(value)) {
-                    vaule.amount = 1
-                } else {
-                    vaule.amount = value
-                }
-            }
-        })
-        Storage.saveCart(cart)
-        this.renderCartPayment(cart)
-        this.addCartItem(cart)
-        this.setTotal(cart)
-    }
+	// get amount item to change
+	getInputCartItemNumber(itemId, value) {
+		cart.forEach(vaule => {
+			if (vaule.id === itemId) {
+				if (value <= 0 || isNaN(value)) {
+					vaule.amount = 1
+				} else {
+					vaule.amount = value
+				}
+			}
+		})
+		Storage.saveCart(cart)
+		this.renderCartPayment(cart)
+		this.addCartItem(cart)
+		this.setTotal(cart)
+	}
 
-    // handle change input note item
-    inputCartItemNote() {
-        const noteItem = cartList.querySelectorAll('.cart__bottom--input')
-        noteItem.forEach(e => {
-            e.addEventListener('change', event => {
-                let target = event.target
-                let value = target.value
-                let itemId = target.dataset.id
-                this.getInputCartItemNote(value, itemId)
-            })
-        })
-    }
+	// handle change input note item
+	inputCartItemNote() {
+		const noteItem = cartList.querySelectorAll('.cart__bottom--input')
+		noteItem.forEach(e => {
+			e.addEventListener('change', event => {
+				let target = event.target
+				let value = target.value
+				let itemId = target.dataset.id
+				this.getInputCartItemNote(value, itemId)
+			})
+		})
+	}
 
-    // get item add note to cart
-    getInputCartItemNote(value, itemId) {
-        cart.forEach((vaule) => {
-            if (vaule.id === itemId) {
-                vaule.note = value
-            }
-        })
-        Storage.saveCart(cart)
-        this.addCartItem(cart)
-        this.renderCartPayment(cart)
-    }
+	// get item add note to cart
+	getInputCartItemNote(value, itemId) {
+		cart.forEach(vaule => {
+			if (vaule.id === itemId) {
+				vaule.note = value
+			}
+		})
+		Storage.saveCart(cart)
+		this.addCartItem(cart)
+		this.renderCartPayment(cart)
+	}
 
-    // show Bill
-    showBill() {
-        orverlay.classList.remove('overlay__hide')
-        bill.classList.remove('bill__hide')
-    }
+	// show Bill
+	showBill() {
+		orverlay.classList.remove('overlay__hide')
+		bill.classList.remove('bill__hide')
+	}
 
-    // hide Bill
-    hideBill() {
-        orverlay.classList.add('overlay__hide')
-        bill.classList.add('bill__hide')
-    }
+	// hide Bill
+	hideBill() {
+		orverlay.classList.add('overlay__hide')
+		bill.classList.add('bill__hide')
+	}
 
-    // hande click back to close bill
-    backBill() {
-        backBill.addEventListener('click', () => {
-            this.hideBill()
-        })
-    }
+	// hande click back to close bill
+	backBill() {
+		backBill.addEventListener('click', () => {
+			this.hideBill()
+		})
+	}
 
-    // hande click show bill and render products in cart to bill
-    payment() {
-        continuePayment.addEventListener('click', () => {
-            this.showBill()
-            cart = Storage.getCart()
-            this.renderCartPayment(cart)
-        })
-    }
+	// hande click show bill and render products in cart to bill
+	payment() {
+		continuePayment.addEventListener('click', () => {
+			this.showBill()
+			cart = Storage.getCart()
+			this.renderCartPayment(cart)
+		})
+	}
 
-    // render item in cart to bill
-    renderCartPayment(item) {
-        cartPayment.innerHTML = this.getCartItems(item)
-        this.setTotal(item)
-    }
+	// render item in cart to bill
+	renderCartPayment(item) {
+		cartPayment.innerHTML = this.getCartItems(item)
+		this.setTotal(item)
+	}
 
-    // Logic item in bill
-    paymentLogic() {
-        cartPayment.addEventListener('click', e => {
-            if (e.target.classList.contains('cart__bottom--trash')) {
-                let item = e.target
-                let id = item.dataset.id
-                this.getItemRemove(id)
-                cartPayment.removeChild(item.parentElement.parentElement)
-                this.addCartItem(cart)
-            }
-        })
-        cartPayment.addEventListener('change', e => {
-            if (e.target.classList.contains('cart__input')) {
-                let target = e.target
-                let value = parseInt(target.value)
-                let item = target.parentElement.parentElement.parentElement
-                let itemId = item.dataset.id
-                this.getInputCartItemNumber(itemId, value)
-            } else if (e.target.classList.contains('cart__bottom--input')) {
-                let target = e.target
-                let value = target.value
-                let itemId = target.dataset.id
-                this.getInputCartItemNote(value, itemId)
-            }
-        })
-    }
+	// Logic item in bill
+	paymentLogic() {
+		cartPayment.addEventListener('click', e => {
+			if (e.target.classList.contains('cart__bottom--trash')) {
+				let item = e.target
+				let id = item.dataset.id
+				this.getItemRemove(id)
+				cartPayment.removeChild(item.parentElement.parentElement)
+				this.addCartItem(cart)
+			}
+		})
+		cartPayment.addEventListener('change', e => {
+			if (e.target.classList.contains('cart__input')) {
+				let target = e.target
+				let value = parseInt(target.value)
+				let item = target.parentElement.parentElement.parentElement
+				let itemId = item.dataset.id
+				this.getInputCartItemNumber(itemId, value)
+			} else if (e.target.classList.contains('cart__bottom--input')) {
+				let target = e.target
+				let value = target.value
+				let itemId = target.dataset.id
+				this.getInputCartItemNote(value, itemId)
+			}
+		})
+	}
 
-    // chose type in bill payment
-    getTypeOrder() {
-        orderTypeList.forEach(e => {
-            e.addEventListener('click', event => {
-                const item = event.target.textContent
-                orderType.innerHTML = item
-            })
-        })
-    }
+	// chose type in bill payment
+	getTypeOrder() {
+		orderTypeList.forEach(e => {
+			e.addEventListener('click', event => {
+				const item = event.target.textContent
+				orderType.innerHTML = item
+			})
+		})
+	}
 
-    // chose type payment  
-    getPaymentType() {
-        selectType.addEventListener('click', e => {
-            paymentType.forEach(btn => {
-                if (e.target.classList.contains('form__select--item')) {
-                    btn.classList.remove('form__select--active')
-                    e.target.classList.add('form__select--active')
-                }
-            })
-        })
-    }
+	// chose type payment
+	getPaymentType() {
+		selectType.addEventListener('click', e => {
+			paymentType.forEach(btn => {
+				if (e.target.classList.contains('form__select--item')) {
+					btn.classList.remove('form__select--active')
+					e.target.classList.add('form__select--active')
+				}
+			})
+		})
+	}
 
-    // handle add item adter show bill
-    addItemInPayment() {
-        addItemInPayment.addEventListener('click', () => {
-            this.hideBill()
-        })
-    }
+	// handle add item adter show bill
+	addItemInPayment() {
+		addItemInPayment.addEventListener('click', () => {
+			this.hideBill()
+		})
+	}
 
-    // handle delete item after show bill
-    cancelBill() {
-        cancelBill.addEventListener('click', () => {
-            this.hideBill()
-        })
-    }
+	// handle delete item after show bill
+	cancelBill() {
+		cancelBill.addEventListener('click', () => {
+			this.hideBill()
+		})
+	}
 
-    // handle item after sumbit success bill
-    submitBill() {
-        submitBill.addEventListener('click', () => {
+	// handle item after sumbit success bill
+	submitBill() {
+		submitBill.addEventListener('click', () => {
+			Storage.clearCart(cart)
+			cart = []
+			this.addCartItem(cart)
+			this.renderCartPayment(cart)
+			this.setTotal(cart)
+			this.hideBill()
+			this.randombill()
+		})
+	}
 
-            Storage.clearCart(cart)
-            cart = []
-            this.addCartItem(cart)
-            this.renderCartPayment(cart)
-            this.setTotal(cart)
-            this.hideBill()
-            this.randombill()
-        })
-    }
+	// random number bill
+	randombill() {
+		let random = Math.floor(Math.random() * 100000)
+		randomOrder.innerHTML = `Orders #${random}`
+		randomBill.innerHTML = `Orders #${random}`
+	}
 
-    // random number bill
-    randombill() {
-        let random = Math.floor(Math.random() * 100000)
-        randomOrder.innerHTML = `Orders #${random}`
-        randomBill.innerHTML = `Orders #${random}`
-    }
-
-    // set up App after open web
-    setupApp() {
-        cart = Storage.clear()
-        // cart = Storage.getCart()
-        this.addCartItem(cart)
-        this.setTotal(cart)
-        this.backBill()
-        this.payment()
-        this.addItemInPayment()
-        this.cancelBill()
-        this.randombill()
-    }
+	// set up App after open web
+	setupApp() {
+		cart = Storage.clear()
+		// cart = Storage.getCart()
+		this.addCartItem(cart)
+		this.setTotal(cart)
+		this.backBill()
+		this.payment()
+		this.addItemInPayment()
+		this.cancelBill()
+		this.randombill()
+	}
 }
 // local storage
 class Storage {
-    // save data form database add to local storage
-    static saveProducts(products) {
-        localStorage.setItem('products', JSON.stringify(products))
-    }
+	// save data form database add to local storage
+	static saveProducts(products) {
+		localStorage.setItem('products', JSON.stringify(products))
+	}
 
-    // get data form local storage
-    static getProducts() {
-        let products = JSON.parse(localStorage.getItem('products'))
-        return products
-    }
+	// get data form local storage
+	static getProducts() {
+		let products = JSON.parse(localStorage.getItem('products'))
+		return products
+	}
 
-    // get data.id form local storage
-    static getProductId(id) {
-        let products = JSON.parse(localStorage.getItem('products'))
-        return products.find(product => product.id === id)
-    }
+	// get data.id form local storage
+	static getProductId(id) {
+		let products = JSON.parse(localStorage.getItem('products'))
+		return products.find(product => product.id === id)
+	}
 
-    // save cart to local storage
-    static saveCart(cart) {
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }
+	// save cart to local storage
+	static saveCart(cart) {
+		localStorage.setItem('cart', JSON.stringify(cart))
+	}
 
-    // get cart to local storage
-    static getCart() {
-        return localStorage.getItem('cart')
-            ? JSON.parse(localStorage.getItem('cart'))
-            : []
-    }
+	// get cart to local storage
+	static getCart() {
+		return localStorage.getItem('cart')
+			? JSON.parse(localStorage.getItem('cart'))
+			: []
+	}
 
-    // remove cart to local storage
-    static clearCart() {
-        localStorage.removeItem("cart")
-    }
+	// remove cart to local storage
+	static clearCart() {
+		localStorage.removeItem('cart')
+	}
 
-    // delete all data to local storage
-    static clear() {
-        localStorage.clear()
-    }
+	// delete all data to local storage
+	static clear() {
+		localStorage.clear()
+	}
+
+	// save user form page login add to local storage
+	static saveUser(value) {
+		localStorage.setItem('user', JSON.stringify(value))
+	}
+
+	// get name user form local storage
+	static getUser() {
+		let products = JSON.parse(localStorage.getItem('user'))
+		return products
+	}
+
+	// remove user to local storage
+	static clearUser() {
+		localStorage.removeItem('user')
+	}
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const ui = new UI()
-    const products = new Products()
-    // setup app
-    ui.setupApp()
+document.addEventListener('DOMContentLoaded', () => {
+	const ui = new UI()
+	const products = new Products()
+	// setup app
+	ui.setupApp()
 
-    // get all products
-    products.getProducts().then(products => {
-        ui.displayProducts(products)
-        ui.displayCategory(products)
-        ui.displayTime()
-        Storage.saveProducts(products)
-    }).then(() => {
-        ui.getProductFormCategory()
-        ui.inputSearchProduct()
-        ui.handleDivider()
-        ui.paymentLogic()
-        ui.getBtnOrder()
-        ui.getTypeOrder()
-        ui.getPaymentType()
-        ui.submitBill()
-    })
+	// get all products
+	products
+		.getProducts()
+		.then(products => {
+			ui.displayProducts(products)
+			ui.displayCategory(products)
+			ui.displayTime()
+			Storage.saveProducts(products)
+		})
+		.then(() => {
+			ui.getProductFormCategory()
+			ui.inputSearchProduct()
+			ui.handleDivider()
+			ui.paymentLogic()
+			ui.getBtnOrder()
+			ui.getTypeOrder()
+			ui.getPaymentType()
+			ui.submitBill()
+		})
 })
