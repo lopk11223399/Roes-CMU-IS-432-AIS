@@ -30,6 +30,7 @@ body {
   border-radius: 0 16px 16px 0;
   z-index: 1;
 }
+
 .sidebar__logo {
   background: linear-gradient(180deg, #ea9769 0%, #ea6969 100%);
   border-radius: 12px;
@@ -39,14 +40,17 @@ body {
   flex-direction: row;
   padding: 6px;
 }
+
 .sidebar__logo--link svg {
   padding: 8px;
   width: 40px;
   height: 40px;
 }
+
 .sidebar__logo--link svg path {
   fill: #ffffff;
 }
+
 .sidebar__menu {
   display: flex;
   align-items: center;
@@ -57,41 +61,51 @@ body {
   position: relative;
   z-index: 2;
 }
+
 .sidebar__menu--link {
   padding: 16px;
   border-radius: 8px;
   transition: all 0.5s ease-in;
 }
+
 .sidebar__menu--link svg {
   width: 24px;
   height: 24px;
 }
+
 .sidebar__menu--link svg path {
   fill: #ea7c69;
 }
+
 .sidebar__menu--link:hover {
   background-color: #ea7c69;
   box-shadow: 0px 8px 24px rgba(234, 124, 105, 0.32);
 }
+
 .sidebar__menu--link:hover svg path {
   fill: #ffffff;
 }
+
 .sidebar__logout {
   padding: 16px;
   border-radius: 8px;
   transition: all 0.5s ease-in;
 }
+
 .sidebar__logout--link svg {
   width: 24px;
   height: 24px;
 }
+
 .sidebar__logout--link svg path {
   fill: #ea7c69;
 }
+
 .sidebar__logout:hover {
   background-color: #ea7c69;
   box-shadow: 0px 8px 24px rgba(234, 124, 105, 0.32);
 }
+
 .sidebar__logout:hover svg path {
   fill: #ffffff;
 }
@@ -100,6 +114,7 @@ body {
   background-color: #ea7c69;
   border-radius: 8px;
 }
+
 .menu-active svg path {
   fill: #ffffff;
 }
@@ -134,6 +149,7 @@ body {
   padding-bottom: 24px;
   margin-bottom: 24px;
 }
+
 .header__title {
   font-weight: 600;
   font-size: 28px;
@@ -141,6 +157,7 @@ body {
   color: #ffffff;
   margin-bottom: 4px;
 }
+
 .header__time {
   font-weight: 400;
   font-size: 16px;
@@ -152,6 +169,7 @@ body {
   display: flex;
   margin-bottom: 24px;
 }
+
 .card__item {
   flex-grow: 1;
   padding: 16px;
@@ -159,56 +177,70 @@ body {
   background-color: #1f1d2b;
   border-radius: 8px;
 }
+
 .card__item:first-child .card__header--icon svg circle {
   stroke: #9288e0;
 }
+
 .card__item:first-child .card__header--icon svg path {
   fill: #9288e0;
 }
+
 .card__item:nth-child(2) .card__header--icon svg path {
   fill: #ffb572;
 }
+
 .card__item:last-child {
   margin-right: 0;
 }
+
 .card__item:last-child .card__header--icon svg path {
   fill: #65b0f6;
 }
+
 .card__header {
   display: flex;
   margin-bottom: 8px;
 }
+
 .card__header--icon {
   padding: 7px;
   background-color: #252836;
   border-radius: 8px;
   margin-right: 12px;
 }
+
 .card__header--icon svg {
   width: 24px;
   height: 24px;
 }
+
 .card__header--status {
   display: flex;
   align-items: center;
 }
+
 .card__avg {
   font-weight: 500;
   font-size: 12px;
   line-height: 140%;
   margin-right: 6px;
 }
+
 .card__icon {
   padding: 2px;
   border-radius: 20px;
 }
+
 .card__icon svg {
   width: 14px;
   height: 14px;
 }
+
 .card__icon svg path {
   fill: #50d1aa;
 }
+
 .card__sumBill {
   font-weight: 600;
   font-size: 28px;
@@ -216,6 +248,7 @@ body {
   color: #ffffff;
   margin-bottom: 8px;
 }
+
 .card__desc {
   font-weight: 500;
   font-size: 14px;
@@ -226,9 +259,11 @@ body {
 .increase .card__avg {
   color: #50d1aa;
 }
+
 .increase .card__icon {
   background-color: rgba(136, 224, 145, 0.24);
 }
+
 .increase .card__icon svg path {
   fill: #50d1aa;
 }
@@ -236,10 +271,12 @@ body {
 .decrease .card__avg {
   color: #ff7ca3;
 }
+
 .decrease .card__icon {
   background-color: rgba(255, 100, 113, 0.24);
   transform: rotate(180deg);
 }
+
 .decrease .card__icon svg path {
   fill: #ff7ca3;
 }
@@ -248,6 +285,7 @@ body {
   background-color: #1f1d2b;
   border-radius: 8px;
 }
+
 .report__header {
   border-bottom: 1px solid #393c49;
   padding: 24px 16px 0;
@@ -256,6 +294,7 @@ body {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 }
+
 .report__title {
   font-weight: 600;
   font-size: 20px;
@@ -263,11 +302,13 @@ body {
   color: #ffffff;
   margin-bottom: 16px;
 }
+
 .report__category {
   width: 100%;
 }
+
 .report__category th {
-  width: 25%;
+  width: 16.6666666667%;
   text-align: left;
   font-weight: 600;
   font-size: 14px;
@@ -275,22 +316,27 @@ body {
   color: #ffffff;
   padding-bottom: 16px;
 }
+
 .report__category--item {
   width: 100%;
 }
+
 .report__table {
   overflow: auto;
   height: 275px;
   padding: 16px 16px;
 }
+
 .report__table::-webkit-scrollbar {
   display: none;
 }
+
 .report__list {
   width: 100%;
 }
+
 .report__item th {
-  width: 25%;
+  width: 16.6666666667%;
   text-align: left;
   font-weight: 400;
   font-size: 14px;
@@ -312,6 +358,7 @@ body {
   border-radius: 8px;
   margin-bottom: 17px;
 }
+
 .calendar__header {
   display: flex;
   align-items: center;
@@ -319,24 +366,29 @@ body {
   padding: 20px;
   border-bottom: 1px solid #393c49;
 }
+
 .calendar__current--date {
   font-weight: 600;
   font-size: 20px;
   line-height: 140%;
   color: #ffffff;
 }
+
 .calendar__icon {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
+
 .calendar__icon svg {
   width: 24px;
   height: 24px;
 }
+
 .calendar__icon svg path {
   fill: #ffffff;
 }
+
 .calendar__icon--next {
   transform: rotate(270deg);
   margin-right: 12px;
@@ -344,26 +396,33 @@ body {
   border-radius: 50%;
   position: relative;
 }
+
 .calendar__icon--next:hover {
   background-color: #393c49;
 }
+
 .calendar__icon--next:hover svg path {
   fill: #ea7c69;
 }
+
 .calendar__icon--prev {
   transform: rotate(90deg);
   padding: 4px;
   border-radius: 50%;
 }
+
 .calendar__icon--prev:hover {
   background-color: #393c49;
 }
+
 .calendar__icon--prev:hover svg path {
   fill: #ea7c69;
 }
+
 .calendar__bottom {
   padding: 20px 20px 16px;
 }
+
 .calendar__weeks {
   display: flex;
   font-weight: 500;
@@ -372,10 +431,12 @@ body {
   color: #ffffff;
   margin-bottom: 12px;
 }
+
 .calendar__weeks li {
   text-align: center;
   width: 14.2857142857%;
 }
+
 .calendar__days {
   display: flex;
   flex-wrap: wrap;
@@ -383,6 +444,7 @@ body {
   position: relative;
   align-items: center;
 }
+
 .calendar__days li {
   text-align: center;
   font-weight: 500;
@@ -394,6 +456,7 @@ body {
   z-index: 1;
   position: relative;
 }
+
 .calendar__days li::before {
   position: absolute;
   content: "";
@@ -405,15 +468,19 @@ body {
   transform: translate(-50%, -50%);
   z-index: -1;
 }
+
 .calendar__days li.calendar__days--active::before {
   background-color: #ea7c69;
 }
+
 .calendar__days li:not(.calendar__days--active):hover {
   color: #ffffff;
 }
+
 .calendar__days li:not(.calendar__days--active):hover::before {
   background-color: #ea7c69;
 }
+
 .calendar__inactive {
   color: #393c49;
 }
@@ -422,6 +489,7 @@ body {
   background-color: #1f1d2b;
   border-radius: 8px;
 }
+
 .progress__header {
   padding: 20px 20px 16px;
   border-bottom: 1px solid #393c49;
@@ -430,12 +498,14 @@ body {
   line-height: 140%;
   color: #ffffff;
 }
+
 .progress__chart {
   padding: 20px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .progress__circle {
   width: 176px;
   height: 176px;
@@ -443,6 +513,7 @@ body {
   border-radius: 50%;
   position: relative;
 }
+
 .progress__circle--1 {
   width: calc(100% - 23px);
   height: calc(100% - 23px);
@@ -453,6 +524,7 @@ body {
   transform: translate(-50%, -50%);
   border-radius: inherit;
 }
+
 .progress__circle--2 {
   width: calc(100% - 46px);
   height: calc(100% - 46px);
@@ -463,6 +535,7 @@ body {
   transform: translate(-50%, -50%);
   border-radius: inherit;
 }
+
 .progress__circle--3 {
   width: calc(100% - 69px);
   height: calc(100% - 69px);
@@ -473,30 +546,38 @@ body {
   transform: translate(-50%, -50%);
   border-radius: inherit;
 }
+
 .progress__circle--color {
   width: 18px;
   height: 18px;
   border-radius: 50%;
 }
+
 .progress__item {
   display: flex;
   margin-bottom: 16px;
 }
+
 .progress__item:first-child .progress__circle--color {
   background-color: #ff7ca3;
 }
+
 .progress__item:nth-child(2) .progress__circle--color {
   background-color: #ffb572;
 }
+
 .progress__item:last-child {
   margin-bottom: 0;
 }
+
 .progress__item:last-child .progress__circle--color {
   background-color: #65b0f6;
 }
+
 .progress__info {
   margin-left: 9px;
 }
+
 .progress__info--name {
   font-weight: 500;
   font-size: 14px;
@@ -504,6 +585,7 @@ body {
   color: #ffffff;
   text-transform: capitalize;
 }
+
 .progress__info--num {
   font-weight: 400;
   font-size: 12px;
